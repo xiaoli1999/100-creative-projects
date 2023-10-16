@@ -7,8 +7,137 @@
     <meta name="keywords" content="刮刮乐, 幸运游戏, 好运十倍刮刮卡, 在线娱乐, 免费刮奖">
     <meta name="description" content="刮刮乐的快乐时刻，让您尽情享受幸运抽奖游戏的乐趣！为您提供幸运游戏的机会，在线娱乐无限乐趣。立即尝试您的抽奖机会。">
     <title>刮刮乐·好运十倍</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/fabric.min.js"></script>
+    <script src="./js/vue.global.min.js"></script>
 </head>
 <body>
-<div id="app"></div>
+<div id="app">
+    <header>
+        刮刮乐
+        <img src="./img/ten.png" alt="">
+    </header>
+    <div class="size">
+        刮奖尺寸：
+        <input v-model="defaultSize" type="range" min="5" max="40"  @change="sizeChange">
+    </div>
+    <div class="card-wrap">
+        <div class="card">
+            <!-- 卡片头部 -->
+            <div class="card-head">
+<!--                <img src="./img/ten.png" alt="">-->
+<!--                <img src="./img/40.png" alt="">-->
+                <div class="card-head-result">刮奖结果</div>
+            </div>
+            <!-- 刮奖区域 -->
+            <div class="card-main">
+                <div v-for="(row, rowIndex) in numList" :key="rowIndex" class="card-main-row">
+                    <div v-for="(num, numIndex) in row" :key="numIndex" class="card-main-col">
+                        <template v-if="numIndex === row.length - 1">
+                            <div class="gold">
+                            <!--<span>奖金{{ cnNumList[9 - rowIndex] }}</span>-->
+                                <span>{{ num }}元</span>
+                                <img src="./img/gold.png" alt="">
+                            </div>
+
+                        </template>
+                        <template v-else>
+                            <div class="num" :class="num === 10 || num === awardNum ? 'active' : ''">{{ num }}</div>
+                        <!--<img class="money" src="./img/money.png" alt="">-->
+                        </template>
+
+                    </div>
+                </div>
+            </div>
+            <!-- 玩法释义 -->
+            <div  v-if="false" class="card-desc">
+                任意一个“我的号码”与“中奖号码”相同，即可获得该对应的奖金；
+                如果刮出号码“10”，即可获得该行对应奖金的10倍.
+            </div>
+
+            <!-- 定位元素 -->
+            <!-- 聚宝盆背景 -->
+            <img class="card-pot" src="./img/pot.png" alt=""></img>
+
+            <!-- 点点星星背景 -->
+            <img class="card-star" src="./img/star.png" alt=""></img>
+
+            <!-- 中奖号码区域 -->
+            <div class="card-award">
+                <p>中奖号码</p>
+                <!--<img src="./img/money.png">-->
+                <div>{{ awardNum }}</div>
+            </div>
+
+            <!-- 10次机会 -->
+            <div v-if="false" class="card-ten">
+                <p>10次</p>
+                <p>中奖机会</p>
+            </div>
+        </div>
+
+        <!-- canvas画布 -->
+        <canvas id="mask" width="346" height="450"></canvas>
+    </div>
+    <footer>素材来源于网络，本站仅供娱乐哦~</footer>
+</div>
+
+<script>
+	const app = Vue.createApp({
+		data() {
+			return {
+				awardNum : this.createRandomNum(),
+				defaultNumList: [[500], [60], [60], [20], [200], ['40万'], [10], [100], [40], [500]],
+				numList: [],
+				cnNumList: ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'],
+                defaultSize: 12,
+                canvas: null
+			};
+		},
+        created () {
+			this.initNumList()
+        },
+		mounted () {
+			this.initMask()
+		},
+		methods: {
+			initNumList () {
+				this.numList = this.defaultNumList.sort(() => Math.random() - 0.5).map((row, rowIndex) => {
+					const rowTotal = rowIndex > 6 ? 8 : rowIndex + 1
+
+                    for (let i = 0;i < rowTotal; i++) {
+						row.unshift(this.createRandomNum())
+                    }
+
+					return row
+                }).reverse()
+            },
+            initMask () {
+				this.canvas = new fabric.Canvas('mask', { isDrawingMode: true });
+
+				/* 设置画笔 */
+				this.canvas.freeDrawingBrush = new fabric.EraserBrush(this.canvas)
+				this.canvas.freeDrawingBrush.width = this.defaultSize
+
+                /* 绘制遮罩卡片 */
+				const backgroundImageUrl = './img/mask.png'; // 替换为你的底层图像
+				fabric.Image.fromURL(backgroundImageUrl, (img) => {
+					img.set({ selectable: false });
+					img.scaleToWidth(this.canvas.width, true)
+					this.canvas.add(img);
+				});
+            },
+            createRandomNum () {
+				const randomNum = Math.floor(Math.random() * 59) + 1
+                return randomNum > 9 ? randomNum : '0' + randomNum
+            },
+			sizeChange () {
+				this.canvas.freeDrawingBrush.width = this.defaultSize
+            }
+		}
+	});
+
+	app.mount('#app');
+</script>
 </body>
 </html>

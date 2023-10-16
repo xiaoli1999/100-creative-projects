@@ -1,0 +1,242 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  width: 100%;
+}
+img {
+  display: block;
+}
+#app {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #efefef;
+}
+header {
+  position: relative;
+  width: fit-content;
+  font-size: 36px;
+  color: #9d0000;
+  font-weight: 600;
+  margin: 24px auto;
+}
+header > img {
+  position: absolute;
+  width: 64px;
+  right: -74px;
+  top: 20%;
+  animation: shake 2.4s infinite;
+  transform-origin: center;
+}
+.size {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+@keyframes shake {
+  0%,
+  66%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  22% {
+    transform: translateX(-5px) rotate(15deg);
+  }
+  44% {
+    transform: translateX(5px) rotate(-15deg);
+  }
+}
+.card-wrap {
+  position: relative;
+  padding: 10px;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 8px 8px 12px #cecece, -8px -8px 8px #f2f2f2;
+}
+.card-wrap .card {
+  position: relative;
+  width: 346px;
+  height: 450px;
+  background: #f4f4f4 url("../img/bg.png") center no-repeat;
+  background-size: 100% 100%;
+  z-index: 10;
+  overflow: hidden;
+}
+.card-wrap .card .card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+}
+.card-wrap .card .card-head > img {
+  height: 32px;
+}
+.card-wrap .card .card-head .card-head-result {
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 600;
+  -webkit-text-stroke: 1px #222;
+  /* 描边宽度和颜色 */
+  color: #fff;
+  text-shadow: 1px 1px 2px #000;
+}
+.card-wrap .card .card-main {
+  width: 320px;
+  height: 340px;
+  padding: 8px 0;
+  margin: 0 auto;
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.card-wrap .card .card-main .card-main-row {
+  display: flex;
+  width: fit-content;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #ddd;
+}
+.card-wrap .card .card-main .card-main-row:last-child {
+  border: 0;
+}
+.card-wrap .card .card-main .card-main-row .card-main-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-right: 1px solid #ddd;
+}
+.card-wrap .card .card-main .card-main-row .card-main-col:last-child {
+  border: 0;
+}
+.card-wrap .card .card-main .card-main-row .card-main-col .gold {
+  position: relative;
+}
+.card-wrap .card .card-main .card-main-row .card-main-col .gold > img {
+  width: auto;
+  height: 28px;
+}
+.card-wrap .card .card-main .card-main-row .card-main-col .gold > span {
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  left: 0;
+  right: 0;
+  bottom: 12%;
+  top: 0;
+  margin: auto;
+  z-index: 1;
+  font-size: 12px;
+  color: #fff;
+  text-shadow: 1px 1px 2px #000;
+  letter-spacing: -1px;
+}
+.card-wrap .card .card-main .card-main-row .card-main-col .num {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  font-weight: 600;
+  -webkit-text-stroke: 1px #222;
+  /* 描边宽度和颜色 */
+  color: #fff;
+  text-shadow: 1px 1px 2px #000;
+}
+.card-wrap .card .card-main .card-main-row .card-main-col .num.active {
+  color: red;
+}
+.card-wrap .card .card-main .card-main-row .card-main-col > img {
+  width: 32px;
+  height: 32px;
+}
+.card-wrap .card .card-desc {
+  font-size: 12px;
+  color: #fff;
+  line-height: 1.1;
+  padding: 2px 15px;
+  text-shadow: 1px 1px 1px #000;
+}
+.card-wrap .card .card-pot {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: -12%;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  z-index: -1;
+}
+.card-wrap .card .card-star {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: -1;
+}
+.card-wrap .card .card-award {
+  position: absolute;
+  left: 30px;
+  bottom: 70px;
+}
+.card-wrap .card .card-award > p {
+  font-size: 12px;
+  text-align: center;
+  color: #fff;
+  text-shadow: 1px 1px 1px #000;
+}
+.card-wrap .card .card-award > div {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 600;
+  -webkit-text-stroke: 1px #222;
+  /* 描边宽度和颜色 */
+  color: #fff;
+  text-shadow: 1px 1px 2px #000;
+}
+.card-wrap .card .card-award > img {
+  width: 60px;
+}
+.card-wrap .card .card-ten {
+  position: absolute;
+  right: 8px;
+  bottom: 80px;
+}
+.card-wrap .card .card-ten > p {
+  font-size: 20px;
+  text-align: center;
+  -webkit-text-stroke: 1px #333;
+  color: yellow;
+  font-weight: 900;
+}
+.card-wrap .canvas-container {
+  position: absolute !important;
+  left: 10px;
+  top: 10px;
+  z-index: 1000;
+}
+footer {
+  padding: 8px 0;
+  font-size: 14px;
+  color: #333333;
+}
+/*# sourceMappingURL=index.css.map */
