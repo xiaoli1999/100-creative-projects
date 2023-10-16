@@ -21,7 +21,13 @@
         刮奖尺寸：
         <input v-model="defaultSize" type="range" min="5" max="40"  @change="sizeChange">
     </div>
-    <div class="card-wrap">
+
+    <!--加载中-->
+    <div v-if="loading" class="loading">
+        <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+    </div>
+
+    <div v-show="!loading" class="card-wrap">
         <div class="card">
             <!-- 卡片头部 -->
             <div class="card-head">
@@ -91,7 +97,8 @@
 				numList: [],
 				cnNumList: ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'],
                 defaultSize: 12,
-                canvas: null
+                canvas: null,
+				loading: true
 			};
 		},
         created () {
@@ -125,6 +132,7 @@
 					img.set({ selectable: false });
 					img.scaleToWidth(this.canvas.width, true)
 					this.canvas.add(img);
+					this.loading = false
 				});
             },
             createRandomNum () {
