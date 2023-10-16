@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="keywords" content="前端开发, web设计, 创意项目, 有趣网站, 开源资源, 分享灵感。">
     <meta name="description" content="欢迎来到前端创意世界，探索100个令人兴奋的前端创意项目。这里汇集了100个有趣、创意的前端项目。探索各种设计和技术，激发创新，启发您的下一个项目。">
@@ -17,8 +17,63 @@
 		})();
     </script>
     <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            padding: 24px 0;
+            text-align: center;
+        }
+
+        a:hover,
+        a:visited,
+        a:link,
+        a:active {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            display: block;
+        }
+
+        main {
+            max-width: 1200px;
+            display: flex;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        main > a {
+            width: 24%;
+            font-size: 14px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        main > a > img {
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+
+    </style>
 </head>
 <body>
-<div id="app"></div>
+<div>
+    <h2>100个创意项目</h2>
+    <main>
+        <a href="./project/01-scratch-card" target="_blank">
+            <img src="./project/01-scratch-card/preview.png" alt="">
+            <p>01-刮刮乐</p>
+        </a>
+    </main>
+</div>
 </body>
 </html>
