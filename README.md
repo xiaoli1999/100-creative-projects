@@ -1,19 +1,16 @@
 ## 100个创意项目🌈
 
-
 ### 项目描述
 100个前端创意项目
 
+### 专栏地址
+[**掘金专栏-采黎创意**](https://juejin.cn/column/7280797398347202595)
+[**CSDN专栏-采黎创意**](https://blog.csdn.net/weixin_53673959/category_12472492.html)
 
-### 地址
-[github✈️ https://github.com/xiaoli1999/custom-avatar](https://github.com/xiaoli1999/custom-avatar)
+### 效果预览
+🚀🚀🚀 **[体验地址](https://www.xiaoli.vip/100-creative-projects/)** 🚀🚀🚀
 
-[gitee✈️ https://gitee.com/cui-zhe/custom-avatar](https://gitee.com/cui-zhe/custom-avatar)
-
-### 预览
-[主站✈️ https://www.xiaoli.vip/custom-avatar](https://www.xiaoli.vip/custom-avatar)
-
-[github pages✈️ https://xiaoli1999.github.io/custom-avatar](https://xiaoli1999.github.io/custom-avatar)
+🚀🚀🚀 **[体验地址（github pages）](https://xiaoli1999.github.io/100-creative-projects)** 🚀🚀🚀
 
 ### 开源
 目前代码已开源， 如果你喜欢这个项目或使用过它，请点个star⭐，谢谢🙏🙏🙏！
