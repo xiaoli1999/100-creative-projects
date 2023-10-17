@@ -117,7 +117,7 @@ header > img {
 }
 .card-wrap .card .card-head .card-head-result {
   width: 100%;
-  height: 48px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,6 +145,7 @@ header > img {
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
 }
 .card-wrap .card .card-main .card-main-row:last-child {
   border: 0;
@@ -155,6 +156,7 @@ header > img {
   justify-content: center;
   flex-shrink: 0;
   border-right: 1px solid #ddd;
+  box-sizing: border-box;
 }
 .card-wrap .card .card-main .card-main-row .card-main-col:last-child {
   border: 0;
@@ -182,7 +184,7 @@ header > img {
   letter-spacing: -1px;
 }
 .card-wrap .card .card-main .card-main-row .card-main-col .num {
-  width: 32px;
+  width: 31px;
   height: 32px;
   display: flex;
   align-items: center;
