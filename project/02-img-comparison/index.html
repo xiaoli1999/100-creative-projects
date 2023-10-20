@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="../../favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="图片对比器">
+    <meta name="description" content="js图片对比器">
+    <title>图片对比器</title>
+
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+<header>图片对比器</header>
+
+<main>
+    <h2>跟随图片大小</h2>
+    <div class="img1-container">
+        <img class="old-img" src="https://cdn.xiaoli.vip/img/custom-avatar/li-98303870793588-national-483.png!avatar" alt="">
+        <div id="news" class="new">
+            <img class="new-img" src="https://cdn.xiaoli.vip/img/custom-avatar/li-98303952181722-national-467.png!avatar" alt="">
+        </div>
+        <div id="control">
+            <div></div>
+            <img src="./img/drag.png" alt="">
+        </div>
+    </div>
+</main>
+
+</body>
+
+<script>
+	const control = document.getElementById("control");
+	const newDom = document.querySelector("#news");
+	const imageContainer = document.querySelector(".img1-container");
+
+	let isDragging = false;
+
+	control.addEventListener("mousedown", (e) => {
+		isDragging = true;
+		document.addEventListener("mousemove", onMouseMove);
+		document.addEventListener("mouseup", onMouseUp);
+	});
+
+	function onMouseUp() {
+		isDragging = false;
+		document.removeEventListener("mousemove", onMouseMove);
+		document.removeEventListener("mouseup", onMouseUp);
+	}
+
+	function onMouseMove(e) {
+		e.preventDefault(); // 阻止默认的鼠标点击事件
+		if (!isDragging) return;
+		const contentLeft = imageContainer.getBoundingClientRect().left
+		let offsetX = e.clientX - contentLeft;
+
+		if (offsetX < 0) offsetX = 0
+        if (offsetX > 500) offsetX = 500
+
+        const percentage = (offsetX / imageContainer.offsetWidth) * 100;
+        control.style.left = `calc(${percentage + "%"} - 21px)`;
+        newDom.style.width = percentage + "%"; // 调整显示左侧和右侧的宽度
+	}
+</script>
+</html>
