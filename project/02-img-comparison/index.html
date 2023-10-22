@@ -11,55 +11,158 @@
     <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
-<header>图片对比器</header>
+<header>图片对比器（兼容移动端，可自适应）</header>
 
 <main>
-    <h2>跟随图片大小</h2>
-    <div class="img1-container">
-        <img class="old-img" src="https://cdn.xiaoli.vip/img/custom-avatar/li-98303870793588-national-483.png!avatar" alt="">
-        <div id="news" class="new">
-            <img class="new-img" src="https://cdn.xiaoli.vip/img/custom-avatar/li-98303952181722-national-467.png!avatar" alt="">
+    <div class="main-img">
+        <div id="imgContainer" class="img-container">
+            <img id="oldImg" class="old-img" src="" alt="">
+            <div id="newWrap" class="new-wrap">
+                <img id="newImg" class="new-img" src="" alt="">
+            </div>
+            <div id="control">
+                <div></div>
+                <img src="./img/drag.png" alt="">
+            </div>
+            <div id="tip" class="tip">优化后</div>
         </div>
-        <div id="control">
-            <div></div>
-            <img src="./img/drag.png" alt="">
-        </div>
+        <div id="loading" class="loading"></div>
     </div>
+
+    <button onclick="changeImg()">切换图片</button>
 </main>
 
 </body>
 
 <script>
-	const control = document.getElementById("control");
-	const newDom = document.querySelector("#news");
-	const imageContainer = document.querySelector(".img1-container");
+	const imageContainerDom = document.querySelector("#imgContainer");
+	const oldImgDom = document.querySelector("#oldImg");
+	const newWrapDom = document.querySelector("#newWrap");
+	const newImgDom = document.querySelector("#newImg");
+	const controlDom = document.querySelector("#control");
+	const tipDom = document.querySelector("#tip");
+	const loadingDom = document.querySelector("#loading");
 
-	let isDragging = false;
+	const init = (oldImg = './img/o2.jpg', newImg = './img/n2.jpg') => {
+		loadingDom.style.display = 'block'
+		controlDom.style.display = 'none'
+		tipDom.style.display = 'none'
 
-	control.addEventListener("mousedown", (e) => {
-		isDragging = true;
-		document.addEventListener("mousemove", onMouseMove);
-		document.addEventListener("mouseup", onMouseUp);
+        /* 优化体验 */
+		oldImgDom.style.opacity = '0'
+		newWrapDom.style.opacity = '0'
+
+		oldImgDom.src = oldImg
+		newImgDom.src = newImg
+
+		oldImgDom.onload = () => {
+			/* 获取图片原始宽高 */
+			const imgOriginalW = oldImgDom.naturalWidth
+			const imgOriginalH = oldImgDom.naturalHeight
+
+			/* 长边适配，计算图片缩放比例 */
+			const imageContainerRatio = imageContainerDom.offsetWidth / imageContainerDom.offsetHeight
+			const imgRatio = imgOriginalW / imgOriginalH
+
+			if (imageContainerRatio >= imgRatio) {
+				const imgW =  (imageContainerDom.offsetHeight / imgOriginalH) * imgOriginalW;
+
+				/* 设置新图、旧图宽高 */
+				oldImgDom.style.width = imgW + 'px'
+				oldImgDom.style.height = imageContainerDom.offsetHeight + 'px'
+				newImgDom.style.width = imgW + 'px'
+				newImgDom.style.height = imageContainerDom.offsetHeight + 'px'
+
+				/* 设置新图位置 */
+				newImgDom.style.left = (imageContainerDom.offsetWidth - imgW) / 2 + 'px'
+				newImgDom.style.top = '0'
+			} else {
+				const imgH = (imageContainerDom.offsetWidth / imgOriginalW) * imgOriginalH;
+
+				/* 设置新图、旧图宽高 */
+				oldImgDom.style.width = imageContainerDom.offsetWidth + 'px'
+				oldImgDom.style.height = imgH + 'px'
+				newImgDom.style.width = imageContainerDom.offsetWidth + 'px'
+				newImgDom.style.height = imgH + 'px'
+
+				/* 设置新图位置 */
+				newImgDom.style.left = '0'
+				newImgDom.style.top = (imageContainerDom.offsetHeight - imgH) / 2 + 'px'
+			}
+
+
+
+			setTimeout(() => {
+				oldImgDom.style.opacity = '1'
+				newWrapDom.style.opacity = '1'
+				loadingDom.style.display = 'none'
+				controlDom.style.display = 'block'
+				tipDom.style.display = 'block'
+			}, 500)
+
+			controlDom.addEventListener("mousedown", (e) => {
+				document.addEventListener("mousemove", onMouseMove);
+				document.addEventListener("mouseup", onMouseUp);
+			});
+
+			function onMouseUp() {
+				document.removeEventListener("mousemove", onMouseMove);
+				document.removeEventListener("mouseup", onMouseUp);
+			}
+
+			/* 触摸拖拽 */
+			controlDom.addEventListener("touchstart", (e) => {
+				document.addEventListener("touchmove", onMouseMove);
+				document.addEventListener("touchend", onTouchend);
+			});
+
+			function onTouchend() {
+				document.removeEventListener("touchmove", onMouseMove);
+				document.removeEventListener("touchend", onTouchend);
+			}
+
+			function onMouseMove(e) {
+				e.preventDefault();
+
+				/* 计算鼠标距离当前父元素左侧的距离 */
+				const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX
+				const contentLeft = imageContainerDom.getBoundingClientRect().left
+				let offsetX = clientX - contentLeft;
+
+				/* 边界检测，最小为0， 最大为3320px（图片的宽度） */
+				if (offsetX < 0) offsetX = 0
+				if (offsetX > imageContainerDom.offsetWidth) offsetX = imageContainerDom.offsetWidth
+
+				/* 设置控件的位置，要考虑到控件自身的宽度 */
+				controlDom.style.left = `${ offsetX - controlDom.offsetWidth / 2 }px`;
+				/* 设置提示框位置 */
+				tipDom.style.left = `${ offsetX - tipDom.offsetWidth }px`;
+				/* 设置新图容器的宽度 */
+				newWrapDom.style.width = offsetX + "px";
+			}
+
+		}
+
+		oldImgDom.onerror = () => {
+			loadingDom.style.display = 'none'
+            alert('图片加载失败')
+        }
+    }
+
+	/* 初次调用 */
+	init()
+
+	let timer = null
+	window.addEventListener("resize", () => {
+		if (timer) clearTimeout(timer)
+
+		timer = setTimeout(() => init(), 200)
 	});
 
-	function onMouseUp() {
-		isDragging = false;
-		document.removeEventListener("mousemove", onMouseMove);
-		document.removeEventListener("mouseup", onMouseUp);
-	}
+	const changeImg = () => {
+		if (oldImgDom.src.includes('o1')) return init()
 
-	function onMouseMove(e) {
-		e.preventDefault(); // 阻止默认的鼠标点击事件
-		if (!isDragging) return;
-		const contentLeft = imageContainer.getBoundingClientRect().left
-		let offsetX = e.clientX - contentLeft;
-
-		if (offsetX < 0) offsetX = 0
-        if (offsetX > 500) offsetX = 500
-
-        const percentage = (offsetX / imageContainer.offsetWidth) * 100;
-        control.style.left = `calc(${percentage + "%"} - 21px)`;
-        newDom.style.width = percentage + "%"; // 调整显示左侧和右侧的宽度
-	}
+        init('./img/o1.jpg', './img/n1.png')
+    }
 </script>
 </html>
