@@ -45,8 +45,8 @@
 
 	const init = (oldImg = './img/o2.jpg', newImg = './img/n2.jpg') => {
 		loadingDom.style.display = 'block'
-		controlDom.style.display = 'none'
-		tipDom.style.display = 'none'
+		controlDom.style.opacity = '0'
+		tipDom.style.opacity = '0'
 
         /* 优化体验 */
 		oldImgDom.style.opacity = '0'
@@ -96,8 +96,8 @@
 				oldImgDom.style.opacity = '1'
 				newWrapDom.style.opacity = '1'
 				loadingDom.style.display = 'none'
-				controlDom.style.display = 'block'
-				tipDom.style.display = 'block'
+				controlDom.style.opacity = '1'
+				tipDom.style.opacity = '1'
 			}, 500)
 
 			controlDom.addEventListener("mousedown", (e) => {
@@ -140,6 +140,11 @@
 				/* 设置新图容器的宽度 */
 				newWrapDom.style.width = offsetX + "px";
 			}
+
+			/* 初始化时重置控件位置 */
+			controlDom.style.left = `${ imageContainerDom.offsetWidth / 2 - controlDom.offsetWidth / 2 }px`;
+			tipDom.style.left = `${ imageContainerDom.offsetWidth / 2 - tipDom.offsetWidth }px`;
+			newWrapDom.style.width = imageContainerDom.offsetWidth / 2 + "px";
 
 		}
 
